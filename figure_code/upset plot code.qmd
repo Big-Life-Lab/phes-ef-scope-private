@@ -1,0 +1,131 @@
+---
+title: "scr_terms upset"
+format:
+  html:
+    theme: default
+---
+
+```{r}
+###0. Prepare Packages###
+
+# install.packages(c("readr","dplyr","tidyr","ggplot2","cowplot","here"))
+
+library(readr)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(cowplot)
+library(here)
+fig_dir <- here::here("figures")       
+if (!dir.exists(fig_dir)) dir.create(fig_dir)
+
+###1. Prepare data###
+df <- read_csv("https://raw.githubusercontent.com/Big-Life-Lab/phes-ef-scope-private/refs/heads/main/data_raw/phes_ef_all_concept_long_workbook.csv?token=GHSAT0AAAAAADIRZBI6MX6Q53A73TJ7SH3I2EQ6CJQ") %>%
+  filter(
+    !scr_term %in% c("missing", "FALSE"),
+    !is.na(scr_term)
+    ) %>%
+  mutate(year = as.numeric(year))
+
+###2. set the chronical order for the data###
+term_years <- df %>%
+  group_by(scr_term) %>%
+  summarise(first_year = min(year, na.rm = TRUE), .groups = "drop") %>%
+  arrange(first_year, scr_term)
+
+study_years <- df %>%
+  group_by(study_id) %>%
+  summarise(first_year = min(year, na.rm = TRUE), .groups = "drop") %>%
+  arrange(first_year, study_id)
+
+terms_order <- term_years$scr_term
+study_order <- study_years$study_id
+
+df <- df %>%
+  mutate(
+    scr_term = factor(scr_term, levels = terms_order, ordered = TRUE),
+    study_id = factor(study_id, levels = study_order, ordered = TRUE)
+  )
+###3. term count###
+term_counts <- tibble(scr_term = terms_order) %>%
+  left_join(count(df, scr_term, name = "count"), by = "scr_term") %>%
+  mutate(count = coalesce(count, 0)) %>%
+  arrange(factor(scr_term, levels = terms_order))
+
+max_count <- max(term_counts$count)
+
+###4. Bar plot###
+bar_plot <- ggplot(term_counts,
+                   aes(x = factor(scr_term, levels = terms_order),
+                       y = count)) +
+  geom_col(width = 1, fill = "#2B83BA") +
+  geom_text(aes(label = count), vjust = -0.35, size = 3) +
+  labs(x = NULL,
+       y = "Number of studies\nassessing each concept") +
+  theme_minimal(base_size = 11) +
+  theme(
+    axis.text.x  = element_text(angle = 90, vjust = 0.5, hjust = 1, size = 8),
+    axis.ticks.x = element_blank(),
+    panel.grid   = element_blank(),
+    panel.border = element_blank(),
+    axis.line    = element_blank(),
+    axis.title.y = element_text(margin = margin(r = 0)),
+    plot.margin  = margin(12, 10, 24, 10)
+  ) +
+  coord_cartesian(ylim = c(0, max_count * 1.25), clip = "off") +
+  scale_x_discrete(limits = terms_order, drop = FALSE, expand = c(0, 0))
+
+###5. heatmap ###
+heatmap_data <- df %>%
+  mutate(study_id = factor(study_id, levels = study_order, ordered = TRUE),
+    scr_term = factor(scr_term, levels = terms_order, ordered = TRUE)
+  ) %>%
+  distinct(study_id, scr_term) %>%
+  mutate(value = 1) %>%
+  tidyr::complete(study_id, scr_term, fill = list(value = 0))
+
+heatmap_plot <- ggplot(heatmap_data,
+                       aes(x = scr_term,
+                           y = study_id,
+                           fill = value)) +
+  geom_tile(color = "grey90") +
+  scale_fill_gradient(low = "white", high = "#2B83BA") +
+  scale_x_discrete(limits = terms_order, drop = FALSE, expand = c(0, 0)) +
+  scale_y_discrete(limits = rev(study_order),   ### make sure it's chronical
+                   expand = c(0.04, 0)) +
+  labs(x = NULL, y = NULL) +
+  theme_minimal(base_size = 11) +
+  theme(
+    legend.position   = "none",
+    axis.text.x       = element_blank(),
+    axis.ticks        = element_blank(),
+    axis.text.y       = element_text(size = 8, lineheight = 1.15),
+    panel.grid        = element_blank(),
+    panel.border      = element_blank(),
+    axis.line         = element_blank(),
+    plot.margin       = margin(2, 10, 12, 10)
+  )
+
+###6. combine bargraph and heatmap###
+aligned <- cowplot::align_plots(bar_plot, heatmap_plot,
+                                align = "v", axis = "lr")
+
+combined_plot <- cowplot::plot_grid(
+  cowplot::ggdraw() +
+    cowplot::draw_label("Figure. XXXXX",
+                        fontface = "bold", size = 14, hjust = 0.5),
+  # combine
+  cowplot::plot_grid(aligned[[1]], aligned[[2]],
+                     ncol = 1, rel_heights = c(3, 5)),
+  ncol = 1,
+  rel_heights = c(0.08, 1)
+)
+
+###7. save the figure###
+ggsave(
+  filename = file.path(fig_dir, "upset_bar_heatmap.pdf"), 
+  plot = combined_plot,
+  width = 24, height = 13, units = "in", dpi = 300)
+
+```
+
