@@ -38,7 +38,7 @@ jobs:
       # 5. render QMD
       - name: Render QMD
         run: |
-          quarto render figure_code/scr_terms_upset.qmd
+          quarto render figure_code/upset_plot_code.qmd
 
       # 6. Commit rendered figures
       - name: Commit rendered figures
