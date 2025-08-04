@@ -30,13 +30,11 @@ jobs:
         uses: quarto-dev/quarto-actions/setup@v2        
       
 
-      # 4.  R packages
+      # 4. install R packages
       - name: Install R packages
-  run: |
-    Rscript -e 'install.packages(c(
-      "readr","dplyr","tidyr","ggplot2","cowplot","here",
-      "knitr","rmarkdown"
-    ), repos = "https://cloud.r-project.org")'
+        run: |
+          Rscript -e "install.packages(c('readr','dplyr','tidyr','ggplot2','cowplot','here','knitr','rmarkdown'), repos = 'https://cloud.r-project.org')"
+
 
       # 5. render QMD
       - name: Render QMD
