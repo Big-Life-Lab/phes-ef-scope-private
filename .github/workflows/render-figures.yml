@@ -28,8 +28,7 @@ jobs:
       # 3. set up Quarto
       - name: Setup Quarto
         uses: quarto-dev/quarto-actions/setup@v2        
-        with:
-          version: "latest"
+      
 
       # 4.  R packages
       - name: Install R packages
