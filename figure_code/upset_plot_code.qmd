@@ -20,7 +20,7 @@ fig_dir <- here::here("figures")
 if (!dir.exists(fig_dir)) dir.create(fig_dir)
 
 ###1. Prepare data###
-df <- read_csv("data_raw/phes_ef_all_concept_long_workbook.csv") %>%
+df <- read_csv("../data_raw/phes_ef_all_concept_long_workbook.csv") %>%
   filter(
     !scr_term %in% c("missing", "FALSE"),
     !is.na(scr_term)
