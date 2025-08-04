@@ -20,7 +20,7 @@ fig_dir <- here::here("figures")
 if (!dir.exists(fig_dir)) dir.create(fig_dir)
 
 ###1. Prepare data###
-df <- read_csv("https://raw.githubusercontent.com/Big-Life-Lab/phes-ef-scope-private/refs/heads/main/data_raw/phes_ef_all_concept_long_workbook.csv?token=GHSAT0AAAAAADIRZBI6MX6Q53A73TJ7SH3I2EQ6CJQ") %>%
+df <- read_csv("data_raw/phes_ef_all_concept_long_workbook.csv") %>%
   filter(
     !scr_term %in% c("missing", "FALSE"),
     !is.na(scr_term)
