@@ -3,6 +3,8 @@ title: "dictionary documentation"
 format:
   html:
     theme: default
+params:
+  dict_path: "data_raw/2025_07_15_ScopingReview_ReportedConcepts(terms_main).csv"
 ---
 
 ```{r}
@@ -16,7 +18,7 @@ library(glue)
 
 # read CSV
 d <- readr::read_csv(
-  file = "data_raw/2025_07_15_ScopingReview_ReportedConcepts(terms_main).csv",
+  file = params$dict_path,
   show_col_types = FALSE,
   col_types = readr::cols(.default = readr::col_character())
 ) %>%
