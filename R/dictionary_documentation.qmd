@@ -3,8 +3,9 @@ title: "dictionary documentation"
 format:
   html:
     theme: default
+execute-dir: project
 params:
-  dict_path: "data_raw/2025_07_15_ScopingReview_ReportedConcepts(terms_main).csv"
+  dict_path: "../data_raw/2025_07_15_ScopingReview_ReportedConcepts(terms_main).csv"
 ---
 
 ```{r}
