@@ -1,5 +1,6 @@
 project:
   output-dir: docs
+execute-dir: project   
 format:
   html:
     toc: true
