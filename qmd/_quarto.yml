@@ -9,8 +9,6 @@ website:
   title: "PHES Dictionary"
   navbar:
     left:
-      - href: index.qmd
-        text: Home
       - href: dictionary_documentation.qmd
         text: Dictionary
   search: true
