@@ -1,0 +1,34 @@
+project:
+  type: website
+  output-dir: ../docs
+  render:                
+    - index.qmd
+    - dictionary_documentation.qmd
+
+website:
+  title: "PHES Dictionary"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: dictionary_documentation.qmd
+        text: Dictionary
+  search: true
+  page-navigation: true
+
+execute:
+  dir: project
+  warning: false
+  message: false
+
+format:
+  html:
+    theme: default
+    toc: true
+    toc-title: "Terms"
+    toc-depth: 2
+    anchor-sections: true
+    css: assets/styles.css
+    code-copy: true
+    link-external-newwindow: true
+    smooth-scroll: true

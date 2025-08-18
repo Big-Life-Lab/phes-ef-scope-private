@@ -1,0 +1,24 @@
+---
+title: "Welcome"
+---
+
+**PHES Dictionary** is a small Quarto website that renders a terminology dictionary
+directly from a CSV file.
+
+- Use the **Dictionary** tab in the navbar, or click here:  
+  **[Open the Dictionary →](dictionary_documentation.qmd)**
+
+::: callout-tip
+### How this site works
+- The page `dictionary_documentation.qmd` reads your CSV and renders each record
+  as a term with **ID, Label, See also, Definition, Description, Background, Synonyms**.
+- By default we read from the path set in the YAML header of that page:
+  `params: dict_path`.
+:::
+
+## Getting started
+1. Put your real CSV in the repository at `data_raw/your_file.csv`.
+2. Open `qmd/dictionary_documentation.qmd` and set:
+   ```yaml
+   params:
+     dict_path: "../data_raw/your_file.csv"
