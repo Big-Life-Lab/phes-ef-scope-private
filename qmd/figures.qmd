@@ -26,16 +26,7 @@ execute:
 ## Upset Plot {#upset-plot}
 
 ```{r}
-#| echo: false
-#| out.width: "100%"
-#| fig.align: "center"
-library(here)
-
-knitr::opts_knit$set(upload.fun = knitr::image_uri)
-
-up <- here::here("figures", "upset_plot.png")
-stopifnot(file.exists(up))
-knitr::include_graphics(up)
+#| child: partials/_upset_plot.qmd
 
 ```
 
