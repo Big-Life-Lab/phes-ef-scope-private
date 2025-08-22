@@ -6,6 +6,7 @@ toc-location: right
 format:
   html:
     theme: default
+    embed-resources: true 
 execute:
   echo: false
   warning: false
