@@ -1,8 +1,7 @@
 ---
 title: "Figures"
 page-layout: full
-toc: true
-toc-location: right
+toc: false
 format:
   html:
     theme: default
