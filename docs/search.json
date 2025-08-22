@@ -9,9 +9,9 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Dictionary",
+    "title": "PHES",
     "section": "",
-    "text": "If you are not redirected automatically, click open the dictionary."
+    "text": "This site contains: - Dictionary – the term dictionary and documentation. - Figures – Upset plot and bar graphs.\n\nOpen Dictionary → Open Figures →\n\n\n\n\n\nDictionary\nFigures"
   },
   {
     "objectID": "index.html#getting-started",
@@ -691,5 +691,33 @@
     "title": "dictionary documentation",
     "section": "",
     "text": "ID: –\nLabel: Validity (data)\nSee also: N/A\nDefinition –\nDescription N/A\nBackground –\nSynonyms\n\nExact: N/A\n\nBroad: N/A"
+  },
+  {
+    "objectID": "figures.html#upset-plot",
+    "href": "figures.html#upset-plot",
+    "title": "Figures",
+    "section": "Upset Plot",
+    "text": "Upset Plot\n\n\n\n\n\n\n\n\n\n\n↑ Back to top"
+  },
+  {
+    "objectID": "figures.html#framework-used",
+    "href": "figures.html#framework-used",
+    "title": "Figures",
+    "section": "Framework used to evaluate surveillance systems",
+    "text": "Framework used to evaluate surveillance systems\n\n\n\n\n\n\n\n\n\n\n↑ Back to top"
+  },
+  {
+    "objectID": "figures.html#surv-system",
+    "href": "figures.html#surv-system",
+    "title": "Figures",
+    "section": "Type of surveillance system",
+    "text": "Type of surveillance system\n\n\n\n\n\n\n\n\n\n\n↑ Back to top"
+  },
+  {
+    "objectID": "index.html#quick-links",
+    "href": "index.html#quick-links",
+    "title": "PHES",
+    "section": "",
+    "text": "Dictionary\nFigures"
   }
 ]

@@ -4,13 +4,20 @@ project:
   render:                
     - index.qmd
     - dictionary_documentation.qmd
+    - figures.qmd
+  resources:
+    - ../figures/**
 
 website:
   title: "PHES Dictionary"
   navbar:
     left:
+      - href: index.qmd
+        text: Home
       - href: dictionary_documentation.qmd
         text: Dictionary
+      - href: figures.qmd
+        text: Figures
   search: true
   page-navigation: true
 
@@ -18,12 +25,12 @@ execute:
   dir: project
   warning: false
   message: false
+  freeze: auto
 
 format:
   html:
     theme: default
     toc: true
-    toc-title: "Terms"
     toc-depth: 2
     anchor-sections: true
     css: assets/styles.css

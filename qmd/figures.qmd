@@ -1,0 +1,54 @@
+---
+title: "Figures"
+page-layout: full
+toc: true
+toc-location: right
+format:
+  html:
+    theme: default
+execute:
+  echo: false
+  warning: false
+  message: false
+
+---
+
+<div id="top"></div>
+
+<!-- Top quick nav (clickable bar) -->
+<div class="nav nav-pills mb-3">
+  <a class="nav-link" href="#upset-plot">Upset Plot</a>
+  <a class="nav-link" href="#framework-used">Framework used to evaluate surveillance systems</a>
+  <a class="nav-link" href="#surv-system">Type of surveillance system</a>
+</div>
+
+## Upset Plot {#upset-plot}
+
+```{r}
+#| echo: false
+#| out.width: "100%"
+#| fig.align: "center"
+library(here)
+
+knitr::opts_knit$set(upload.fun = knitr::image_uri)
+
+up <- here::here("figures", "upset_plot.png")
+stopifnot(file.exists(up))
+knitr::include_graphics(up)
+
+```
+
+<p class="mt-2"><a href="#top">↑ Back to top</a></p>
+
+## Framework used to evaluate surveillance systems {#framework-used}
+```{r}
+#| child: partials/_bar_graph_framework_used.qmd
+
+```
+<p class="mt-2"><a href="#top">↑ Back to top</a></p>
+
+## Type of surveillance system {#surv-system}
+```{r}
+#| child: partials/_bar_graph_surveillance_system.qmd
+```
+<p class="mt-2"><a href="#top">↑ Back to top</a></p> 

@@ -3,6 +3,9 @@ title: "dictionary documentation"
 format:
   html:
     theme: default
+    toc: true
+    toc-title: "Terms"   
+    toc-depth: 2   
 execute-dir: project
 params:
   dict_path: "../data_raw/2025_07_15_ScopingReview_ReportedConcepts(terms_main).csv"

@@ -1,0 +1,87 @@
+```{r}
+#| fig-width: 12
+#| fig-height: 8
+#| out-width: 100%
+#| fig-align: center
+#| fig-format: svg
+#Packages
+library(readr)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(ggplot2)
+library(here)
+
+#extract data
+data_fp <- here::here("data_raw", "phes_ef_study_data_extraction_clean.csv")
+fig_dir <- here::here("figures")
+
+target_col <- "surv_system_type"
+
+dat <- readr::read_csv(data_fp, show_col_types = FALSE)
+
+nm <- names(dat)
+idx <- which(nm == target_col)
+
+col_vec <- dat[[idx]]
+tbl <- tibble(raw = as.character(col_vec))
+
+# Clean
+tbl_long <- tbl %>%
+  mutate(
+    raw = str_squish(raw),
+    raw_low = str_to_lower(raw),
+    raw_low = str_remove(raw_low, "^[a-z]\\.[\\s]*") 
+  )
+
+# Map to the 6 x-axis categories =====
+map_type <- function(x) {
+  case_when(
+    str_detect(x, "\\bpublic\\s*health\\b")        ~ "Public Health",
+    str_detect(x, "environmental\\s*health")       ~ "Environmental Health",
+    str_detect(x, "wastewater")                    ~ "Wastewater",
+    str_detect(x, "\\bone\\s*health\\b")           ~ "One Health",
+    str_detect(x, "\\bother\\b")                   ~ "Other",
+    str_detect(x, "unknown")                       ~ "Unknown",
+    TRUE ~ NA_character_
+  )
+}
+
+x_order <- c("Public Health","Environmental Health","Wastewater",
+             "One Health","Other","Unknown")
+
+counts <- tbl_long %>%
+  mutate(key = map_type(raw_low)) %>%
+  filter(!is.na(key)) %>%                 
+  count(key, name = "count")
+
+#Fill in missing categories with 0 and set the display order
+counts_all <- tibble(key = x_order) %>%
+  left_join(counts, by = "key") %>%
+  mutate(count = coalesce(count, 0L),
+         key   = factor(key, levels = x_order, ordered = TRUE))
+
+#Plot
+max_y <- max(counts_all$count, na.rm = TRUE)
+p <- ggplot(counts_all, aes(x = key, y = count)) +
+  geom_col(width = 0.8, fill = "#2B83BA") +    
+  geom_text(aes(label = count), vjust = -0.35, size = 4) +
+  labs(
+    title = "Figure x: Type of surveillance system",
+    x = NULL, y = "Number of studies"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    axis.text.x  = element_text(angle = 60, vjust = 1, hjust = 1),
+    panel.grid.x = element_blank(),
+    plot.title   = element_text(hjust = 0.5, face = "bold")
+  ) +
+  coord_cartesian(ylim = c(0, max_y * 1.15), clip = "off")
+
+p
+
+# Save figure 
+ggsave(file.path(fig_dir, "bar_graph_surv_system_type.png"), p,
+       width = 10, height = 6, units = "in", dpi = 300)
+```
+

@@ -1,10 +1,26 @@
 ---
-title: "Dictionary"
+title: "PHES"
+page-layout: full
+toc: false
+format:
+  html:
+    theme: default
 ---
 
-<script>
-  location.href = 'dictionary_documentation.html';
-</script>
+# Welcome
 
-If you are not redirected automatically, click
-[open the dictionary](dictionary_documentation.html).
+This site contains:
+- **Dictionary** – the term dictionary and documentation.
+- **Figures** – Upset plot and bar graphs.
+
+<div class="my-3">
+  <a href="dictionary_documentation.html" class="btn btn-primary me-2">Open Dictionary →</a>
+  <a href="figures.html" class="btn btn-outline-primary">Open Figures →</a>
+</div>
+
+---
+
+## Quick links
+
+- [Dictionary](dictionary_documentation.html)
+- [Figures](figures.html)
