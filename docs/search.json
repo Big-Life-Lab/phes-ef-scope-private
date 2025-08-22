@@ -1,10 +1,24 @@
 [
   {
-    "objectID": "dictionary_documentation.html",
-    "href": "dictionary_documentation.html",
-    "title": "dictionary documentation",
-    "section": "",
-    "text": "ID: –\nLabel: Validity (data)\nSee also: N/A\nDefinition –\nDescription N/A\nBackground –\nSynonyms\n\nExact: N/A\n\nBroad: N/A"
+    "objectID": "figures.html#upset-plot",
+    "href": "figures.html#upset-plot",
+    "title": "Figures",
+    "section": "Upset Plot",
+    "text": "Upset Plot\n\n\n\n\n\n\n↑ Back to top"
+  },
+  {
+    "objectID": "figures.html#framework-used",
+    "href": "figures.html#framework-used",
+    "title": "Figures",
+    "section": "Framework used to evaluate surveillance systems",
+    "text": "Framework used to evaluate surveillance systems\n\n\n\n\n\n\n\n\n\n\n↑ Back to top"
+  },
+  {
+    "objectID": "figures.html#surv-system",
+    "href": "figures.html#surv-system",
+    "title": "Figures",
+    "section": "Type of surveillance system",
+    "text": "Type of surveillance system\n\n\n\n\n\n\n\n\n\n\n↑ Back to top"
   },
   {
     "objectID": "index.html",
@@ -14,18 +28,25 @@
     "text": "This site contains: - Dictionary – the term dictionary and documentation. - Figures – Upset plot and bar graphs.\n\nOpen Dictionary → Open Figures →\n\n\n\n\n\nDictionary\nFigures"
   },
   {
-    "objectID": "index.html#getting-started",
-    "href": "index.html#getting-started",
-    "title": "Welcome",
-    "section": "Getting started",
-    "text": "Getting started\n\nPut your real CSV in the repository at data_raw/your_file.csv.\nOpen qmd/dictionary_documentation.qmd and set: ```yaml params: dict_path: “../data_raw/your_file.csv”"
+    "objectID": "index.html#quick-links",
+    "href": "index.html#quick-links",
+    "title": "PHES",
+    "section": "",
+    "text": "Dictionary\nFigures"
   },
   {
-    "objectID": "dictionary_documentation.html#n-a",
-    "href": "dictionary_documentation.html#n-a",
+    "objectID": "dictionary_documentation.html",
+    "href": "dictionary_documentation.html",
     "title": "dictionary documentation",
     "section": "",
-    "text": "ID: –\nLabel: Validity (data)\nSee also: N/A\nDefinition –\nDescription N/A\nBackground –\nSynonyms - Exact: N/A\n- Broad: N/A"
+    "text": "ID: –\nLabel: Validity (data)\nSee also: N/A\nDefinition –\nDescription N/A\nBackground –\nSynonyms\n\nExact: N/A\n\nBroad: N/A"
+  },
+  {
+    "objectID": "dictionary_documentation.html#validity-data",
+    "href": "dictionary_documentation.html#validity-data",
+    "title": "dictionary documentation",
+    "section": "",
+    "text": "ID: –\nLabel: Validity (data)\nSee also: N/A\nDefinition –\nDescription N/A\nBackground –\nSynonyms\n\nExact: N/A\n\nBroad: N/A"
   },
   {
     "objectID": "dictionary_documentation.html#abilitytocontinuetrackinganevent",
@@ -684,40 +705,5 @@
     "title": "dictionary documentation",
     "section": "– {#}",
     "text": "– {#}\nID: –\nLabel: –\nSee also: N/A\nDefinition –\nDescription –\nBackground –\nSynonyms\n\nExact: –\n\nBroad: –"
-  },
-  {
-    "objectID": "dictionary_documentation.html#validity-data",
-    "href": "dictionary_documentation.html#validity-data",
-    "title": "dictionary documentation",
-    "section": "",
-    "text": "ID: –\nLabel: Validity (data)\nSee also: N/A\nDefinition –\nDescription N/A\nBackground –\nSynonyms\n\nExact: N/A\n\nBroad: N/A"
-  },
-  {
-    "objectID": "figures.html#upset-plot",
-    "href": "figures.html#upset-plot",
-    "title": "Figures",
-    "section": "Upset Plot",
-    "text": "Upset Plot\n\n\n\n\n\n\n\n\n\n\n↑ Back to top"
-  },
-  {
-    "objectID": "figures.html#framework-used",
-    "href": "figures.html#framework-used",
-    "title": "Figures",
-    "section": "Framework used to evaluate surveillance systems",
-    "text": "Framework used to evaluate surveillance systems\n\n\n\n\n\n\n\n\n\n\n↑ Back to top"
-  },
-  {
-    "objectID": "figures.html#surv-system",
-    "href": "figures.html#surv-system",
-    "title": "Figures",
-    "section": "Type of surveillance system",
-    "text": "Type of surveillance system\n\n\n\n\n\n\n\n\n\n\n↑ Back to top"
-  },
-  {
-    "objectID": "index.html#quick-links",
-    "href": "index.html#quick-links",
-    "title": "PHES",
-    "section": "",
-    "text": "Dictionary\nFigures"
   }
 ]
