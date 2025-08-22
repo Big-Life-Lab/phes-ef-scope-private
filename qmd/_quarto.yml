@@ -9,7 +9,7 @@ project:
     - ../figures/**
 
 website:
-  title: "PHES Dictionary"
+  title: "PHES EF"
   navbar:
     left:
       - href: index.qmd
