@@ -1,0 +1,100 @@
+
+```{r}
+# packages
+library(tidyverse); library(janitor); library(gt)
+library(here); library(fs)
+
+# read data
+data_fp <- here::here("data_raw", "phes_ef_study_data_extraction_clean.csv")
+fig_dir <- here::here("figures"); fs::dir_create(fig_dir) 
+
+raw <- readr::read_csv(
+  data_fp,
+  col_select = c(
+    study_id, extracted_source_title, corresponding_author_country,
+    study_design_type, surv_system_type, eval_framework_used
+  ),
+  show_col_types = FALSE
+) |> janitor::clean_names()
+
+# remove second row
+dat <- raw |>
+  mutate(
+    .sid   = tolower(as.character(.data$study_id)),
+    .title = tolower(as.character(.data$extracted_source_title))
+  ) |>
+  filter(!(.sid %in% c("study id", "study_id") | .title %in% "title")) |>
+  select(-.sid, -.title)
+
+# clean the data
+map_design <- function(x){
+  case_when(
+    str_detect(x, regex("^\\s*a\\.|Provides guidance or a descriptive framework", TRUE)) ~
+      "Guidance or a descriptive framework",
+    str_detect(x, regex("^\\s*b\\.|Formal evaluation", TRUE)) ~
+      "Formal evaluation",
+    str_detect(x, regex("^\\s*c\\.|Provides domains, themes", TRUE)) ~
+      "Domains, themes",
+    TRUE ~ "Other"
+  )
+}
+
+clean_surv <- function(x){
+  x |> str_replace_all("^\\s*[a-zA-Z]\\.?\\s*", "") |> str_squish()
+}
+
+map_frameworks <- function(x){
+  if (is.na(x) || str_squish(x) == "") return(NA_character_)
+  xx <- str_squish(x)
+
+  if (str_detect(xx, regex("Not applicable", TRUE)))
+    return("Not applicable")
+  if (str_detect(xx, regex("No framework\\(s\\) or guidance document\\(s\\) were discussed", TRUE)))
+    return("No framework(s) or guidance document(s) were discussed")
+
+  labs <- character(0); add <- function(ok, lab) if (ok) labs <<- unique(c(labs, lab))
+
+  add(str_detect(xx, regex("CDC\\s*1988|1988.*CDC", TRUE)), "CDC 1988")
+  add(str_detect(xx, regex("CDC\\s*2001", TRUE)), "CDC 2001")
+  add(str_detect(xx, regex("CDC\\s*2004", TRUE)), "CDC 2004")
+  add(str_detect(xx, regex("Health\\s*Canada\\s*2004", TRUE)), "Health Canada 2004")
+  add(str_detect(xx, regex("\\bWHO\\s*2006\\b", TRUE)), "WHO 2006")
+  add(str_detect(xx, regex("ECDC\\s*2014", TRUE)), "ECDC 2014")
+  add(str_detect(xx, regex("SER\\s*VAL", TRUE)), "SERVAL")  
+  add(str_detect(xx, regex("(RISKSUR|Survtool)", TRUE)), "The RISKSUR EVA tool (Survtool)")
+  add(str_detect(xx, regex("\\bSurF\\b", TRUE)), "SurF")
+  add(str_detect(xx, regex("\\bOASIS\\b", TRUE)), "OASIS")
+  add(str_detect(xx, regex("(^|;\\s*)k\\.?\\s*Other|\\bOther\\b", TRUE)), "Other")
+
+  if (length(labs) == 0) return(NA_character_)
+  paste(labs, collapse = "; ")
+}
+
+dat_clean <- dat |>
+  mutate(
+    study_design_type   = map_design(.data$study_design_type),
+    surv_system_type    = clean_surv(.data$surv_system_type),
+    eval_framework_used = vapply(.data$eval_framework_used, map_frameworks, character(1))
+  )
+
+# creat table
+table1 <- dat_clean |>
+  transmute(
+    `Study ID`                      = .data$study_id,
+    `Study title`                   = .data$extracted_source_title,
+    `Corresponding author country`  = .data$corresponding_author_country,
+    `Study design type`             = .data$study_design_type,
+    `Surveillance Type`             = .data$surv_system_type,
+    `Evaluation Framework Used`     = .data$eval_framework_used
+  )
+
+table1_gt <- table1 |>
+  gt() |>
+  tab_header(title = md("**Table 1. Study characteristics**"))
+
+table1_gt
+# save the table into figures
+gt::gtsave(table1_gt, file = file.path(fig_dir, "table1_study_characteristics.html"))
+
+
+```

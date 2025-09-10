@@ -10,17 +10,25 @@ execute:
   echo: false
   warning: false
   message: false
-
 ---
 
-<div id="top"></div>
+::: {#top}
+:::
 
 <!-- Top quick nav (clickable bar) -->
-<div class="nav nav-pills mb-3">
-  <a class="nav-link" href="#upset-plot">Upset Plot</a>
-  <a class="nav-link" href="#framework-used">Framework used to evaluate surveillance systems</a>
-  <a class="nav-link" href="#surv-system">Type of surveillance system</a>
-</div>
+
+::: {.nav .nav-pills .mb-3}
+<a class="nav-link" href="#table1">Table 1 — Study characteristics</a> <a class="nav-link" href="#upset-plot">Upset Plot</a> <a class="nav-link" href="#framework-used">Framework used to evaluate surveillance systems</a> <a class="nav-link" href="#surv-system">Type of surveillance system</a> 
+
+:::
+
+
+## Table 1 — Study characteristics {#table1}
+
+```{r}
+#| child: partials/_table1_study_characteristics.qmd
+```
+<p class="mt-2"><a href="#top">↑ Back to top</a></p> 
 
 ## Upset Plot {#upset-plot}
 
@@ -29,17 +37,33 @@ execute:
 
 ```
 
-<p class="mt-2"><a href="#top">↑ Back to top</a></p>
+<p class="mt-2">
+
+<a href="#top">↑ Back to top</a>
+
+</p>
 
 ## Framework used to evaluate surveillance systems {#framework-used}
+
 ```{r}
 #| child: partials/_bar_graph_framework_used.qmd
 
 ```
-<p class="mt-2"><a href="#top">↑ Back to top</a></p>
+
+<p class="mt-2">
+
+<a href="#top">↑ Back to top</a>
+
+</p>
 
 ## Type of surveillance system {#surv-system}
+
 ```{r}
 #| child: partials/_bar_graph_surveillance_system.qmd
 ```
-<p class="mt-2"><a href="#top">↑ Back to top</a></p> 
+
+<p class="mt-2">
+
+<a href="#top">↑ Back to top</a>
+
+</p>

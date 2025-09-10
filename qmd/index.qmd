@@ -9,18 +9,15 @@ format:
 
 # Welcome
 
-This site contains:
-- **Dictionary** – the term dictionary and documentation.
-- **Figures** – Upset plot and bar graphs.
+This site contains: - **Dictionary** – the term dictionary and documentation. - **Figures** – Upset plot and bar graphs.
 
-<div class="my-3">
-  <a href="dictionary_documentation.html" class="btn btn-primary me-2">Open Dictionary →</a>
-  <a href="figures.html" class="btn btn-outline-primary">Open Figures →</a>
-</div>
+::: my-3
+<a href="dictionary_documentation.html" class="btn btn-primary me-2">Open Dictionary →</a> <a href="figures.html" class="btn btn-outline-primary">Open Figures →</a>
+:::
 
----
+------------------------------------------------------------------------
 
 ## Quick links
 
-- [Dictionary](dictionary_documentation.html)
-- [Figures](figures.html)
+-   [Dictionary](dictionary_documentation.html)
+-   [Figures](figures.html)
