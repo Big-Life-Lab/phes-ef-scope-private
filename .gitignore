@@ -66,3 +66,6 @@ qmd/.Rprofile
 qmd/renv/
 
 **/*.quarto_ipynb
+
+# Claude Code session summaries
+.claude/
