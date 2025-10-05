@@ -46,3 +46,21 @@ po/*~
 rsconnect/
 
 /.quarto/
+
+.DS_Store
+
+# Excel source files (synced from SharePoint/Teams)
+# CSVs are extracted programmatically and committed instead
+data_raw/*.xlsx
+data_raw/*.xls
+data_raw/*.xlsm
+
+# Hazel configuration with sensitive local paths
+R/HAZEL_SETUP.md
+
+# Test files and experiments
+/test/
+
+# Local R profile and renv in subdirectories
+qmd/.Rprofile
+qmd/renv/

@@ -1,0 +1,17 @@
+{
+  "hash": "b7304477b8631cf3fbd69c92eafe36fa",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Citation Test\"\nbibliography: references.bib\n---\n\n# Test 1: Direct Citation in QMD\n\nThis works normally: The CDC published guidelines in 1988 [@CDC1988].\n\n# Test 2: Citations from CSV via cat(glue())\n\n## acceptability\n\nThe concept was introduced by CDC in 1988 [@CDC1988] and later refined [@Calba2015].\n## timeliness\n\nEarly frameworks focused on speed [@WHO2006], while modern approaches emphasize actionability [@ECDC2014].\n\n# Test 3: Citations from CSV via markdown_html()\n\n## acceptability (via markdown_html)\n\n<p>The concept was introduced by CDC in 1988 [@CDC1988] and later refined [@Calba2015].</p>\n\n## timeliness (via markdown_html)\n\n<p>Early frameworks focused on speed [@WHO2006], while modern approaches emphasize actionability [@ECDC2014].</p>\n\n# References\n\n::: {#refs}\n:::\n",
+    "supporting": [
+      "test_citations_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

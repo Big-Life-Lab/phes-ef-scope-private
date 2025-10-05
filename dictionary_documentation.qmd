@@ -1,0 +1,198 @@
+---
+title: "dictionary documentation"
+bibliography: assets/PRQ1.bib
+csl: https://www.zotero.org/styles/vancouver
+format:
+  html:
+    theme: default
+    toc: true
+    toc-title: "Terms"
+    toc-depth: 2
+params:
+  dict_path: "data_raw/2025_07_15_ScopingReview_ReportedConcepts(terms_main).csv"
+---
+
+```{r}
+#| label: setup
+#| echo: false
+#| message: false
+#| warning: false
+
+# packages
+library(readr)
+library(dplyr)
+library(stringr)
+library(tidyr)
+library(purrr)
+library(glue)
+library(commonmark)
+
+# read CSV
+d <- readr::read_csv(
+  file = params$dict_path,
+  show_col_types = FALSE,
+  col_types = readr::cols(.default = readr::col_character())
+) %>%
+  dplyr::mutate(dplyr::across(
+    where(is.character) & !any_of(c("term_description", "term_background")),
+    ~ stringr::str_squish(.)
+  ))
+
+if (!"delphi_see_also" %in% names(d)) d$delphi_see_also <- NA_character_
+d <- d %>%
+  mutate(see_also = delphi_see_also)
+
+need <- c("term_name","obo_id","term_label","see_also","scr_def",
+          "term_description","term_background","scr_exact_synonym","scr_broad_synonym")
+for (c in need) if (!c %in% names(d)) d[[c]] <- NA_character_
+
+d <- d %>%
+  select(all_of(need)) %>%
+  mutate(across(everything(), ~ replace_na(., "–"))) %>%
+  arrange(term_name)
+
+is_na_like <- function(x) {
+  x_trim <- stringr::str_trim(x)
+  x_low  <- tolower(x_trim)
+  is.na(x) | x_trim == "" | x_low %in% c("na", "n/a", "-", "–", "—")
+}
+
+# Render markdown to HTML with error tracking
+md_issues <- data.frame(
+  term = character(),
+  field = character(),
+  issue = character(),
+  stringsAsFactors = FALSE
+)
+
+render_markdown <- function(text, term_name = "", field_name = "") {
+  if (is_na_like(text)) return(text)
+
+  tryCatch({
+    # Convert markdown to HTML with GFM extensions
+    html <- commonmark::markdown_html(text, extensions = TRUE)
+
+    # Clean up: remove trailing newline and outer <p> wrapper for simple content
+    html <- str_trim(html)
+    if (str_count(html, "<p>") == 1 && !str_detect(html, "<ul>|<ol>")) {
+      html <- gsub("^<p>|</p>$", "", html)
+    }
+
+    html
+  }, error = function(e) {
+    # Log the error
+    md_issues <<- rbind(md_issues, data.frame(
+      term = term_name,
+      field = field_name,
+      issue = as.character(e$message),
+      stringsAsFactors = FALSE
+    ))
+    # Return original text as fallback
+    text
+  })
+}
+
+
+# anchor
+slug <- function(x) {
+  x |>
+    str_trim() |>
+    str_to_lower() |>
+    str_replace_all("[^a-z0-9]+","-") |>
+    str_replace_all("(^-|-$)", "")
+}
+d <- d %>%
+  mutate(
+    header = if_else(!is_na_like(term_name), term_name, term_label),
+    anchor = slug(header)
+  )
+
+#  See also link
+name_to_anchor <- d %>% select(term_name, anchor)
+link_see_also <- function(s) {
+  if (is_na_like(s)) return("N/A")
+  parts <- str_split(s, ";|,")[[1]] |> str_trim() |> unique()
+  linked <- purrr::map_chr(parts, function(p) {
+    if (is_na_like(p)) return("N/A")
+    hit <- name_to_anchor$anchor[name_to_anchor$term_name == p]
+    if (length(hit) == 1 && !is.na(hit)) glue("[{p}](#{hit})") else p
+  })
+  paste(linked, collapse = "; ")
+}
+d <- d %>% mutate(see_also_render = vapply(see_also, link_see_also, character(1)))
+
+# Render markdown in description and background fields
+d <- d %>%
+  rowwise() %>%
+  mutate(
+    term_description_html = render_markdown(term_description, term_name, "term_description"),
+    term_background_html = render_markdown(term_background, term_name, "term_background")
+  ) %>%
+  ungroup()
+```
+
+```{r}
+#| label: render-dictionary
+#| echo: false
+#| results: asis
+purrr::pwalk(
+  d,
+  function(term_name, obo_id, term_label, see_also, scr_def,
+           term_description, term_background, scr_exact_synonym, scr_broad_synonym,
+           header, anchor, see_also_render, term_description_html, term_background_html) {
+
+    cat(glue("
+## {header} {{#{anchor}}}
+
+
+**ID:** {obo_id}
+**Label:** {term_label}
+**See also:** {see_also_render}
+
+**Definition**
+{scr_def}
+
+**Description**
+{term_description_html}
+
+**Background**
+{term_background_html}
+
+**Synonyms**
+
+- **Exact:** {scr_exact_synonym}
+- **Broad:** {scr_broad_synonym}
+
+
+***
+
+"))
+  }
+)
+```
+
+```{r}
+#| label: markdown-issues-report
+#| echo: false
+#| results: asis
+
+if (nrow(md_issues) > 0) {
+  cat("\n\n---\n\n")
+  cat("## Markdown Rendering Issues\n\n")
+  cat("The following fields had issues rendering markdown:\n\n")
+
+  for (i in 1:nrow(md_issues)) {
+    cat(glue("- **{md_issues$term[i]}** ({md_issues$field[i]}): {md_issues$issue[i]}\n"))
+  }
+} else {
+  # Optional: Uncomment to show success message
+  # cat("\n\n---\n\n")
+  # cat("✅ All markdown rendered successfully!\n\n")
+}
+```
+
+# References
+
+::: {#refs}
+:::
+
