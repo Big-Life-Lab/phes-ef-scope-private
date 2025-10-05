@@ -69,6 +69,32 @@ render_markdown <- function(text, term_name = "", field_name = "") {
   if (is_na_like(text)) return(text)
 
   tryCatch({
+    # Preprocess change tracking markup
+    # Handle deletions: <-- ... --> or <<-- ... --> → strikethrough (handles spaces in closing tag)
+    text <- str_replace_all(text, "<<--\\s*(.+?)\\s*--\\s*>>?", "<del>\\1</del>")
+    text <- str_replace_all(text, "<--\\s*(.+?)\\s*--\\s*>>?", "<del>\\1</del>")
+
+    # Handle additions: <++ ... ++> or <<++ ... ++> → keep as-is (remove markup, handles spaces in closing tag)
+    text <- str_replace_all(text, "<<\\+\\+\\s*(.+?)\\s*\\+\\+\\s*>>?", "\\1")
+    text <- str_replace_all(text, "<\\+\\+\\s*(.+?)\\s*\\+\\+\\s*>>?", "\\1")
+
+    # Handle unclosed markup (remove opening tags without closing tags)
+    if (str_detect(text, "<<\\+\\+|<\\+\\+|<<--|<--")) {
+      md_issues <<- rbind(md_issues, data.frame(
+        term = term_name,
+        field = field_name,
+        issue = "Unclosed change tracking markup found",
+        stringsAsFactors = FALSE
+      ))
+      # Remove any remaining unclosed tags and closing tags
+      text <- str_replace_all(text, "<<\\+\\+\\s*", "")
+      text <- str_replace_all(text, "<\\+\\+\\s*", "")
+      text <- str_replace_all(text, "\\+\\+\\s*>>?", "")
+      text <- str_replace_all(text, "<<--\\s*", "")
+      text <- str_replace_all(text, "<--\\s*", "")
+      text <- str_replace_all(text, "--\\s*>>?", "")
+    }
+
     # Convert markdown to HTML with GFM extensions
     html <- commonmark::markdown_html(text, extensions = TRUE)
 
