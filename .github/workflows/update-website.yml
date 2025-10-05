@@ -60,21 +60,13 @@ jobs:
       - name: Render Quarto website
         run: quarto render
 
-      - name: Commit updated website
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add -A
-          if git diff --staged --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "Update website via GitHub Actions${REASON:+ - $REASON}"
-            git fetch origin main
-            git rebase origin/main
-            git push
-          fi
-        env:
-          REASON: ${{ github.event.inputs.reason }}
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          publish_branch: gh-pages
+          commit_message: "Update website via GitHub Actions${{ github.event.inputs.reason && format(' - {0}', github.event.inputs.reason) || '' }}"
 
       - name: Summary
         run: |

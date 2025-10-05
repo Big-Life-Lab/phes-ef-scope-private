@@ -69,3 +69,6 @@ qmd/renv/
 
 # Claude Code session summaries
 .claude/
+
+# Generated website output (deployed to gh-pages branch)
+/docs/

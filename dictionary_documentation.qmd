@@ -74,9 +74,9 @@ render_markdown <- function(text, term_name = "", field_name = "") {
     text <- str_replace_all(text, "<<--\\s*(.+?)\\s*--\\s*>>?", "<del>\\1</del>")
     text <- str_replace_all(text, "<--\\s*(.+?)\\s*--\\s*>>?", "<del>\\1</del>")
 
-    # Handle additions: <++ ... ++> or <<++ ... ++> → keep as-is (remove markup, handles spaces in closing tag)
-    text <- str_replace_all(text, "<<\\+\\+\\s*(.+?)\\s*\\+\\+\\s*>>?", "\\1")
-    text <- str_replace_all(text, "<\\+\\+\\s*(.+?)\\s*\\+\\+\\s*>>?", "\\1")
+    # Handle additions: <++ ... ++> or <<++ ... ++> → italics with <+ and +> visible
+    text <- str_replace_all(text, "<<\\+\\+\\s*(.+?)\\s*\\+\\+\\s*>>?", "<em>&lt;+ \\1 +&gt;</em>")
+    text <- str_replace_all(text, "<\\+\\+\\s*(.+?)\\s*\\+\\+\\s*>>?", "<em>&lt;+ \\1 +&gt;</em>")
 
     # Handle unclosed markup (remove opening tags without closing tags)
     if (str_detect(text, "<<\\+\\+|<\\+\\+|<<--|<--")) {
