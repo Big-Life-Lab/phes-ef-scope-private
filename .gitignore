@@ -64,3 +64,5 @@ R/HAZEL_SETUP.md
 # Local R profile and renv in subdirectories
 qmd/.Rprofile
 qmd/renv/
+
+**/*.quarto_ipynb
