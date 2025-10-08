@@ -129,7 +129,7 @@ slug <- function(x) {
 }
 d <- d %>%
   mutate(
-    header = if_else(!is_na_like(term_name), term_name, term_label),
+    header = if_else(!is_na_like(term_label), term_label, term_name),
     anchor = slug(header)
   )
 
@@ -171,8 +171,7 @@ purrr::pwalk(
 ## {header} {{#{anchor}}}
 
 
-**ID:** {obo_id}
-**Label:** {term_label}
+**ID:** {term_name}
 **See also:** {see_also_render}
 
 **Definition**
