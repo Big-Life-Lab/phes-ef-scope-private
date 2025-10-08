@@ -49,11 +49,12 @@ rsconnect/
 
 .DS_Store
 
-# Excel source files (synced from SharePoint/Teams)
-# CSVs are extracted programmatically and committed instead
+# Excel source files
+# Ignore all Excel files except the one needed for GitHub Actions
 data_raw/*.xlsx
 data_raw/*.xls
 data_raw/*.xlsm
+!data_raw/2025-07-15_ScopingReview_ReportedConcepts.xlsx
 
 # Hazel configuration with sensitive local paths
 R/HAZEL_SETUP.md

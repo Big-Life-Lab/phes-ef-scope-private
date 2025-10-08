@@ -90,10 +90,10 @@ quarto preview
 
 **Source:** Data originates from an Excel workbook synced from SharePoint/Teams:
 ```
-2025-07-15_ScopingReview_ReportedConcepts.xlsx (gitignored, synced via Hazel)
+2025-07-15_ScopingReview_ReportedConcepts.xlsx (committed to git for GitHub Actions)
 ```
 
-**CSV Files (committed to git):**
+**CSV Files (extracted and committed to git):**
 - `data_raw/2025_07_15_ScopingReview_ReportedConcepts(terms_main).csv` - Dictionary terms
 - `data_raw/phes_ef_study_data_extraction_clean.csv` - Study characteristics (table and bars)
 - `data_raw/phes_ef_all_concept_long_workbook.csv` - Concepts data (matrix/bar combo)
@@ -117,7 +117,7 @@ source("R/extract_excel_to_csv.R")
 source("R/validate_csv_data.R")
 ```
 
-**Important:** The Excel file is gitignored. Only commit the extracted CSV files.
+**Important:** Both the Excel file and extracted CSV files are committed to git. The GitHub Actions workflow can automatically extract CSVs from the Excel file when the website is updated.
 
 ## Regenerating Figures
 - Table 1 is produced by `partials/_table1_study_characteristics.qmd` and saved to `figures/table1_study_characteristics.html`

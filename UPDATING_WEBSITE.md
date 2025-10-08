@@ -126,14 +126,14 @@ Red X (✗) = Failed - contact Doug or technical team
 
 When you click "Run workflow":
 
-1. ✅ GitHub pulls the latest Excel data
-2. ✅ Extracts data to CSV files
+1. ✅ GitHub checks out the repository (including Excel file)
+2. ✅ Extracts data from Excel to CSV files
 3. ✅ Validates the data structure
 4. ✅ Renders the Quarto website
 5. ✅ Publishes to GitHub Pages
 6. ✅ Website is live!
 
-**No software installation needed on your computer!**
+**Important:** For the workflow to use updated Excel data, you must first commit the Excel file to git (see Technical Users section below).
 
 ---
 
