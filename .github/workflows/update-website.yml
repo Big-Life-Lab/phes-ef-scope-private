@@ -8,6 +8,8 @@ on:
         required: false
         type: string
 
+run-name: Update Website${{ github.event.inputs.reason && format(' - {0}', github.event.inputs.reason) || '' }}
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -70,5 +72,12 @@ jobs:
 
       - name: Summary
         run: |
-          echo "✅ Website updated successfully!"
-          echo "View at: https://big-life-lab.github.io/phes-ef-scope-private/"
+          echo "✅ Website updated successfully!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Website:** https://big-life-lab.github.io/phes-ef-scope-private/" >> $GITHUB_STEP_SUMMARY
+          if [ -n "${{ github.event.inputs.reason }}" ]; then
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**Reason:** ${{ github.event.inputs.reason }}" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Updated:** $(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
