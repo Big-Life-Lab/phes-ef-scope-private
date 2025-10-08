@@ -15,6 +15,40 @@ This guide is for team members who want to update the PHES EF website without us
 
 That's it! The data is updated. Now you can publish the website when ready.
 
+### 📝 Formatting Text in Excel (Optional)
+
+You can use markdown formatting in the `term_description` and `term_background` columns:
+
+**Standard Markdown:**
+- `**bold text**` → **bold text**
+- `*italic text*` → *italic text*
+- `[link text](https://example.com)` → clickable links
+- Bullet lists: Start lines with `-` or `*`
+- Numbered lists: Start lines with `1.`, `2.`, etc.
+
+**Change Tracking Markup:**
+- **Deletions:** `<-- text to delete -->` → ~~strikethrough~~
+- **Additions:** `<++ text to add ++>` → *<+ text to add +>* (shown in italics with markers)
+
+**Examples:**
+
+```
+This is **bold** and this is *italic*.
+
+<-- old text --> <++ new text ++>
+
+See the [PHES framework](https://example.com) for details.
+
+Key points:
+- First point
+- Second point
+```
+
+**Tips:**
+- Markdown only works in description and background fields
+- Preview the website to see how formatting appears
+- If formatting looks wrong, check for unclosed tags (missing `-->` or `++>`)
+
 ---
 
 ## 🌐 Step 2: Update the Website (GitHub)
