@@ -43,11 +43,12 @@ d <- d %>%
   mutate(see_also = delphi_see_also)
 
 need <- c("term_name","obo_id","term_label","see_also","scr_def",
-          "term_description","term_background","scr_exact_synonym","scr_broad_synonym")
+          "term_description","term_background","eval_methods","scr_exact_synonym","scr_broad_synonym")
 for (c in need) if (!c %in% names(d)) d[[c]] <- NA_character_
 
 d <- d %>%
   select(all_of(need)) %>%
+  filter(!is.na(term_name), term_name != "", term_name != "N/A") %>%
   mutate(across(everything(), ~ replace_na(., "–"))) %>%
   arrange(term_name)
 
@@ -147,12 +148,13 @@ link_see_also <- function(s) {
 }
 d <- d %>% mutate(see_also_render = vapply(see_also, link_see_also, character(1)))
 
-# Render markdown in description and background fields
+# Render markdown in description, background, and eval_methods fields
 d <- d %>%
   rowwise() %>%
   mutate(
     term_description_html = render_markdown(term_description, term_name, "term_description"),
-    term_background_html = render_markdown(term_background, term_name, "term_background")
+    term_background_html = render_markdown(term_background, term_name, "term_background"),
+    eval_methods_html = render_markdown(eval_methods, term_name, "eval_methods")
   ) %>%
   ungroup()
 ```
@@ -164,30 +166,30 @@ d <- d %>%
 purrr::pwalk(
   d,
   function(term_name, obo_id, term_label, see_also, scr_def,
-           term_description, term_background, scr_exact_synonym, scr_broad_synonym,
-           header, anchor, see_also_render, term_description_html, term_background_html) {
+           term_description, term_background, eval_methods, scr_exact_synonym, scr_broad_synonym,
+           header, anchor, see_also_render, term_description_html, term_background_html, eval_methods_html) {
 
     cat(glue("
 ## {header} {{#{anchor}}}
 
 
 **ID:** {term_name}
+
 **See also:** {see_also_render}
-
-**Definition**
-{scr_def}
-
-**Description**
-{term_description_html}
-
-**Background**
-{term_background_html}
 
 **Synonyms**
 
 - **Exact:** {scr_exact_synonym}
 - **Broad:** {scr_broad_synonym}
 
+**Definition:** {scr_def}
+
+**Description:** {term_description_html}
+
+**Background:** {term_background_html}
+
+**Measurement:**
+{eval_methods_html}
 
 ***
 
