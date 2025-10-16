@@ -1,2 +1,145 @@
-h2, h3 { scroll-margin-top: 6rem; }
-hr { margin: 2rem 0; }
+/* Base adjustments */
+h2, h3 {
+  scroll-margin-top: 6rem;
+}
+
+/* Horizontal rules - bracketing style with bleed effect */
+hr {
+  display: block;
+  height: 0;
+  border: 0;
+  border-top: 6px solid #374151;
+  margin: 0.75rem -2rem;
+  padding: 0;
+}
+
+/* Intro separator - widest separator between title and intro text */
+hr.intro-separator {
+  margin-top: 1rem !important;
+  margin-bottom: 1rem !important;
+  margin-left: -3rem !important;
+  margin-right: -3rem !important;
+}
+
+/* Term separator - appears BEFORE each term heading */
+hr.term-separator {
+  margin-top: 8rem !important;
+  margin-bottom: 0.75rem !important;
+  margin-left: -2rem !important;
+  margin-right: -2rem !important;
+}
+
+/* First term separator - less spacing above since intro text is close */
+hr.intro-separator + p + hr.term-separator {
+  margin-top: 1.5rem !important;
+}
+
+/* Header separator - appears after ID/See also/Synonyms, before Definition */
+hr.header-separator {
+  margin-top: 0.5rem !important;
+  margin-bottom: 0.75rem !important;
+  margin-left: -2rem !important;
+  margin-right: -2rem !important;
+}
+
+/* Dictionary entry sections */
+section.level2 {
+  margin-bottom: 0;
+  padding: 0;
+  page-break-inside: avoid;
+  border-bottom: none;
+}
+
+/* Term headings - ALL CAPS, softer color */
+section.level2 > h2 {
+  color: #1f2937 !important;
+  font-weight: 700 !important;
+  font-size: 1.5em !important;
+  margin-top: 0 !important;
+  margin-bottom: 0.4rem !important;
+  padding-bottom: 0 !important;
+  border-bottom: none !important;
+  letter-spacing: 0.02em !important;
+  text-transform: uppercase !important;
+}
+
+/* ID field - monospace, machine-readable style (first paragraph after h2) */
+section.level2 > p:first-of-type {
+  font-family: 'Monaco', 'Courier New', monospace;
+  font-size: 0.75rem;
+  color: #6b7280;
+  background-color: #f3f4f6;
+  padding: 0.25rem 0.6rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+  border-left: 2px solid #9ca3af;
+  display: inline-block;
+}
+
+/* See also and Synonyms in header section (now 2nd and 3rd paragraphs, after first HR) */
+section.level2 > p:nth-of-type(2),
+section.level2 > p:nth-of-type(3) {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+/* All paragraphs - base styling */
+section.level2 > p {
+  line-height: 1.5;
+  margin-bottom: 0.65rem;
+  color: #1f2937;
+  text-align: justify;
+}
+
+/* Bold labels inline with content */
+section.level2 p strong:first-child {
+  font-weight: 600;
+  color: #374151;
+}
+
+/* Bullet separator for inline synonyms */
+section.level2 p:has(strong:contains("Synonyms")) {
+  color: #4b5563;
+}
+
+/* Cross-reference links */
+a[href^="#"] {
+  color: #1d4ed8;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+a[href^="#"]:hover {
+  text-decoration: underline;
+}
+
+/* Table of contents - clean index style */
+#TOC {
+  background-color: #f9fafb;
+  padding: 1rem 1.25rem;
+  border-left: 1px solid #d1d5db;
+  max-height: calc(100vh - 8rem);
+  overflow-y: auto;
+}
+
+#TOC ul {
+  line-height: 1.5;
+  padding-left: 1rem;
+}
+
+#TOC a {
+  color: #4b5563;
+  text-decoration: none;
+  transition: color 0.15s;
+  font-size: 0.9rem;
+}
+
+#TOC a:hover {
+  color: #111827;
+}
+
+#TOC a.active {
+  color: #111827;
+  font-weight: 600;
+}

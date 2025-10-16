@@ -1,5 +1,5 @@
 ---
-title: "dictionary documentation"
+title: "Terms Dictionary"
 bibliography: assets/PRQ1.bib
 csl: https://www.zotero.org/styles/vancouver
 format:
@@ -11,6 +11,10 @@ format:
 params:
   dict_path: "data_raw/2025_07_15_ScopingReview_ReportedConcepts(terms_main).csv"
 ---
+
+<hr class="intro-separator">
+
+A listing of each performance term identified in the PHES-EF scoping review.
 
 ```{r}
 #| label: setup
@@ -170,17 +174,18 @@ purrr::pwalk(
            header, anchor, see_also_render, term_description_html, term_background_html, eval_methods_html) {
 
     cat(glue("
-## {header} {{#{anchor}}}
 
+<hr class=\"term-separator\">
+
+## {header} {{#{anchor}}}
 
 **ID:** {term_name}
 
 **See also:** {see_also_render}
 
-**Synonyms**
+**Synonyms:** **Exact:** {scr_exact_synonym} • **Broad:** {scr_broad_synonym}
 
-- **Exact:** {scr_exact_synonym}
-- **Broad:** {scr_broad_synonym}
+<hr class=\"header-separator\">
 
 **Definition:** {scr_def}
 
@@ -188,10 +193,7 @@ purrr::pwalk(
 
 **Background:** {term_background_html}
 
-**Measurement:**
-{eval_methods_html}
-
-***
+**Measurement:** {eval_methods_html}
 
 "))
   }
